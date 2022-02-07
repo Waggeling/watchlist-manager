@@ -20,7 +20,12 @@ public class WatchedSeriesController {
 	@Autowired
 	WatchedSeriesRepository watchedSeriesRepository;
 
-    @PostMapping("")
+    @GetMapping("")
+    public Iterable<WatchedSeries> showWatchedSeries() {
+        return watchedSeriesRepository.findAll();
+    }
+
+    @PostMapping("/add")
     public void createWatchedSeries(@RequestBody WatchedSeries watchedSeries) {
         watchedSeriesRepository.save(watchedSeries);
     }
