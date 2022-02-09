@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import WatchedSeriesService from '../services/WatchedSeriesService';
 
 export default class CreateWatchedSeriesComponent extends Component {
     constructor(props) {
@@ -28,7 +29,10 @@ export default class CreateWatchedSeriesComponent extends Component {
         productionCountry: this.state.productionCountry,
         rating: this.state.rating
       }
-      console.log('watched series => ' + JSON.stringify(watchedSeries));
+      WatchedSeriesService.createWatchedSeries(watchedSeries)
+        .then(() => {
+          this.props.navigate('/watchedseries');
+        });
     }
 
     changeNameHandler = (event) => {

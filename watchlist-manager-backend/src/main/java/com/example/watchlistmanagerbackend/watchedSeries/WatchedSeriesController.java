@@ -27,7 +27,7 @@ public class WatchedSeriesController {
         return watchedSeriesRepository.findAll();
     }
 
-    @PostMapping("/add")
+    @PostMapping("")
     public void createWatchedSeries(@RequestBody WatchedSeries watchedSeries) {
         watchedSeriesRepository.save(watchedSeries);
     }
