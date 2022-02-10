@@ -9,16 +9,21 @@ export default class ListWatchedSeriesComponent extends Component {
             watchedSeries: []
         }
         this.addWatchedSeries = this.addWatchedSeries.bind(this);
+        this.updateWatchedSeries = this.updateWatchedSeries.bind(this);
     }
   
     componentDidMount() {
         WatchedSeriesService.getWatchedSeries().then((res) => {
             this.setState({watchedSeries: res.data});
-        })
+        });
     }
 
     addWatchedSeries() {
         this.props.navigate('/add-watchedseries');
+    }
+
+    updateWatchedSeries(id) {
+        this.props.navigate(`/update-watchedseries/${id}`);
     }
 
     render() {
@@ -53,6 +58,9 @@ export default class ListWatchedSeriesComponent extends Component {
                                 <td>{watchedSeries.genre}</td>
                                 <td>{watchedSeries.yearWatched}</td>
                                 <td>{watchedSeries.productionCountry}</td>
+                                <td>
+                                    <button onClick={() => this.updateWatchedSeries(watchedSeries.id)} className="btn btn-primary">Update</button>
+                                </td>
                             </tr>
                         )
                     }

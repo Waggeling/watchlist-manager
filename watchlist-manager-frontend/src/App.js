@@ -5,6 +5,7 @@ import HeaderComponent from './components/HeaderComponent';
 import HOCForRouteProps from './components/HOCForRouteProps';
 import HomeComponent from './components/HomeComponent';
 import ListWatchedSeriesComponent from './components/ListWatchedSeriesComponent';
+import UpdateWatchedSeriesComponent from './components/UpdateWatchedSeriesComponent';
 
 function App() {
   return (
@@ -14,8 +15,9 @@ function App() {
           <div className="container">
             <Routes>
               <Route path="/" element={<HOCForRouteProps Component={HomeComponent} />}></Route>
-              <Route path="watchedseries" element={<HOCForRouteProps Component={ListWatchedSeriesComponent} />}></Route>
-              <Route path="add-watchedseries" element={<HOCForRouteProps Component={CreateWatchedSeriesComponent} />}></Route>
+              <Route path="/watchedseries" element={<HOCForRouteProps Component={ListWatchedSeriesComponent} />}></Route>
+              <Route path="/add-watchedseries" element={<HOCForRouteProps Component={CreateWatchedSeriesComponent} />}></Route>
+              <Route path="/update-watchedseries/:id" element={<HOCForRouteProps Component={UpdateWatchedSeriesComponent} />}></Route>
             </Routes>
           </div>
       </Router>

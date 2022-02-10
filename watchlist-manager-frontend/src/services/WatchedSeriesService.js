@@ -11,6 +11,14 @@ class WatchedSeriesService {
     createWatchedSeries(watchedSeries) {
         return axios.post(WATCHED_SERIES_API_BASE_URL, watchedSeries);
     }
+
+    getWatchedSeriesById(watchedSeriesId) {
+        return axios.get(WATCHED_SERIES_API_BASE_URL + '/' + watchedSeriesId);
+    }
+
+    updateWatchedSeries(watchedSeriesId, watchedSeries) {
+        return axios.put(WATCHED_SERIES_API_BASE_URL + '/' + watchedSeriesId, watchedSeries);
+    }
 }
 
 export default new WatchedSeriesService();
