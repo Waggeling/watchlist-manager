@@ -7,9 +7,16 @@ export default class ListWatchedSeriesComponent extends Component {
 
         this.state = {
             watchedSeries: [],
-            sortBy: ''
+            unfilteredWatchedSeries: [],
+            sortBy: '',
+            filterOption: '',
+            filtering: ''
         }
         this.addWatchedSeries = this.addWatchedSeries.bind(this);
+        this.changeFilteringHandler = this.changeFilteringHandler.bind(this);
+        this.changeFilterOptionHandler = this.changeFilterOptionHandler.bind(this);
+        this.filterWatchedSeries = this.filterWatchedSeries.bind(this);
+        this.resetFiltering = this.resetFiltering.bind(this);
         this.updateWatchedSeries = this.updateWatchedSeries.bind(this);
         this.deleteWatchedSeries = this.deleteWatchedSeries.bind(this);
         this.sortWatchedSeries = this.sortWatchedSeries.bind(this);
@@ -19,7 +26,7 @@ export default class ListWatchedSeriesComponent extends Component {
         WatchedSeriesService.getWatchedSeries().then((res) => {
             let data = res.data;
             data.sort((a, b) => a.id - b.id);
-            this.setState({watchedSeries: data, sortBy: 'id'});
+            this.setState({watchedSeries: data, unfilteredWatchedSeries: data, sortBy: 'id'});
         });
     }
 
@@ -27,12 +34,56 @@ export default class ListWatchedSeriesComponent extends Component {
         this.props.navigate('/add-watchedseries');
     }
 
+    changeFilteringHandler = (event) => {
+        this.setState({filtering: event.target.value});
+    }
+
+    changeFilterOptionHandler = (event) => {
+        this.setState({filterOption: event.target.value});
+    }
+
     deleteWatchedSeries(id) {
         WatchedSeriesService.deleteWatchedSeries(id).then(() => {
+            let filteredWatchedSeries = this.state.watchedSeries.filter(watchedSeries => watchedSeries.id !== id);
             this.setState({
-                watchedSeries: this.state.watchedSeries.filter(watchedSeries => watchedSeries.id !== id)
+                watchedSeries: filteredWatchedSeries,
+                unfilteredWatchedSeries: filteredWatchedSeries
             });
         });
+    }
+
+    filterWatchedSeries = (e) => {
+        e.preventDefault();
+        let filterOption = this.state.filterOption;
+        let filtering = this.state.filtering;
+        let watchedSeries = this.state.unfilteredWatchedSeries;
+        let filtered = true;
+        switch(filterOption) {
+            case 'rating':
+                watchedSeries = watchedSeries.filter(watchedSeries => watchedSeries.rating.toString() === filtering);
+                break;
+            case 'name':
+                watchedSeries = watchedSeries.filter(watchedSeries => watchedSeries.name.toLowerCase().includes(filtering.toLowerCase()));
+                break;
+            case 'genre':
+                watchedSeries = watchedSeries.filter(watchedSeries => watchedSeries.genre.toLowerCase().includes(filtering.toLowerCase()));
+                break;
+            case 'yearWatched':
+                watchedSeries = watchedSeries.filter(watchedSeries => watchedSeries.yearWatched.toString() === filtering);
+                break;
+            case 'productionCountry':
+                watchedSeries = watchedSeries.filter(watchedSeries => watchedSeries.productionCountry.toLowerCase().includes(filtering.toLowerCase()));
+                break;
+            default:
+                filtered = false;
+                break;
+        }
+        filtered? this.setState({watchedSeries: watchedSeries, filterOption: '', filtering: ''}) : this.setState({filterOption: '', filtering: ''});
+    }
+
+    resetFiltering = (e) => {
+        e.preventDefault();
+        this.setState({watchedSeries: this.state.unfilteredWatchedSeries});
     }
 
     sortWatchedSeries(sortBy) {
@@ -68,15 +119,38 @@ export default class ListWatchedSeriesComponent extends Component {
     render() {
     const btnAdd = {
         width: "190px",
-        marginBottom: "15px"
+        marginBottom: "20px"
     };
-    const btnDelete = {
+    const btnMargin = {
         marginLeft: "10px"
     };
+    const formStyle = {
+        marginBottom: "20px"
+    }
     return <div>
         <h2 className='text-center'>Watched Series List</h2>
-        <div className='row'>
-            <button className='btn btn-warning' onClick={this.addWatchedSeries} style={btnAdd}>Add Watched Series</button>
+        <div className='row align-items-end'>
+            <div class="col">
+                <form style={formStyle}>
+                    <div className='form-group'>
+                        <select className="form-select form-select-sm" value={this.state.filterOption} onChange={this.changeFilterOptionHandler}>
+                            <option defaultValue>Choose filtering option</option>
+                            <option value="rating">Rating</option>
+                            <option value="name">Name</option>
+                            <option value="genre">Genre</option>
+                            <option value="yearWatched">Year Watched</option>
+                            <option value="productionCountry">Production Country</option>
+                        </select>
+                        <input placeholder='Filter according to..' name="filtering" className='form-control form-control-sm' value={this.state.filtering} onChange={this.changeFilteringHandler} />
+                    </div>
+                    <button className='btn btn-success' onClick={this.filterWatchedSeries} style={btnMargin}>Set Filter</button>
+                    <button className='btn btn-outline-success' onClick={this.resetFiltering} style={btnMargin}>Reset Filter</button>
+                </form>
+            </div>
+            <div class="col"></div>
+            <div class="col-auto">
+                <button className='btn btn-warning' onClick={this.addWatchedSeries} style={btnAdd}>Add Watched Series</button>
+            </div>
         </div>
         <div className='row'>
             <table className='table table-striped table-bordered'>
@@ -102,7 +176,7 @@ export default class ListWatchedSeriesComponent extends Component {
                                 <td>{watchedSeries.productionCountry}</td>
                                 <td className='text-center'>
                                     <button onClick={() => this.updateWatchedSeries(watchedSeries.id)} className="btn btn-primary">Update</button>
-                                    <button onClick={() => this.deleteWatchedSeries(watchedSeries.id)} className="btn btn-danger" style={btnDelete}>Delete</button>
+                                    <button onClick={() => this.deleteWatchedSeries(watchedSeries.id)} className="btn btn-danger" style={btnMargin}>Delete</button>
                                 </td>
                             </tr>
                         )
