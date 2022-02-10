@@ -15,7 +15,9 @@ export default class ListWatchedSeriesComponent extends Component {
   
     componentDidMount() {
         WatchedSeriesService.getWatchedSeries().then((res) => {
-            this.setState({watchedSeries: res.data});
+            let data = res.data
+            data.sort((a, b) => a.id - b.id);
+            this.setState({watchedSeries: data});
         });
     }
 
@@ -51,7 +53,7 @@ export default class ListWatchedSeriesComponent extends Component {
         <div className='row'>
             <table className='table table-striped table-bordered'>
                 <thead>
-                    <tr>
+                    <tr className='text-center'>
                         <th>Rating</th>
                         <th>Name</th>
                         <th>Genre</th>
@@ -65,12 +67,12 @@ export default class ListWatchedSeriesComponent extends Component {
                         this.state.watchedSeries.map(
                             watchedSeries =>
                             <tr key={watchedSeries.id}>
-                                <td>{watchedSeries.rating}</td>
+                                <td className='text-center'>{watchedSeries.rating}</td>
                                 <td>{watchedSeries.name}</td>
                                 <td>{watchedSeries.genre}</td>
-                                <td>{watchedSeries.yearWatched}</td>
+                                <td className='text-center'>{watchedSeries.yearWatched}</td>
                                 <td>{watchedSeries.productionCountry}</td>
-                                <td>
+                                <td className='text-center'>
                                     <button onClick={() => this.updateWatchedSeries(watchedSeries.id)} className="btn btn-primary">Update</button>
                                     <button onClick={() => this.deleteWatchedSeries(watchedSeries.id)} className="btn btn-danger" style={btnDelete}>Delete</button>
                                 </td>
