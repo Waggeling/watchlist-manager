@@ -19,6 +19,10 @@ class WatchedSeriesService {
     updateWatchedSeries(watchedSeriesId, watchedSeries) {
         return axios.put(WATCHED_SERIES_API_BASE_URL + '/' + watchedSeriesId, watchedSeries);
     }
+
+    deleteWatchedSeries(watchedSeriesId) {
+        return axios.delete(WATCHED_SERIES_API_BASE_URL + '/' + watchedSeriesId);
+    }
 }
 
 export default new WatchedSeriesService();

@@ -10,6 +10,7 @@ export default class ListWatchedSeriesComponent extends Component {
         }
         this.addWatchedSeries = this.addWatchedSeries.bind(this);
         this.updateWatchedSeries = this.updateWatchedSeries.bind(this);
+        this.deleteWatchedSeries = this.deleteWatchedSeries.bind(this);
     }
   
     componentDidMount() {
@@ -22,19 +23,30 @@ export default class ListWatchedSeriesComponent extends Component {
         this.props.navigate('/add-watchedseries');
     }
 
+    deleteWatchedSeries(id) {
+        WatchedSeriesService.deleteWatchedSeries(id).then(() => {
+            this.setState({
+                watchedSeries: this.state.watchedSeries.filter(watchedSeries => watchedSeries.id !== id)
+            });
+        });
+    }
+
     updateWatchedSeries(id) {
         this.props.navigate(`/update-watchedseries/${id}`);
     }
 
     render() {
-    const btnStyle = {
+    const btnAdd = {
         width: "190px",
         marginBottom: "15px"
     };
+    const btnDelete = {
+        marginLeft: "10px"
+    }
     return <div>
         <h2 className='text-center'>Watched Series List</h2>
         <div className='row'>
-            <button className='btn btn-warning' onClick={this.addWatchedSeries} style={btnStyle}>Add Watched Series</button>
+            <button className='btn btn-warning' onClick={this.addWatchedSeries} style={btnAdd}>Add Watched Series</button>
         </div>
         <div className='row'>
             <table className='table table-striped table-bordered'>
@@ -60,6 +72,7 @@ export default class ListWatchedSeriesComponent extends Component {
                                 <td>{watchedSeries.productionCountry}</td>
                                 <td>
                                     <button onClick={() => this.updateWatchedSeries(watchedSeries.id)} className="btn btn-primary">Update</button>
+                                    <button onClick={() => this.deleteWatchedSeries(watchedSeries.id)} className="btn btn-danger" style={btnDelete}>Delete</button>
                                 </td>
                             </tr>
                         )
