@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import WatchedSeriesService from '../services/WatchedSeriesService';
 
 export default class UpdateWatchedSeriesComponent extends Component {
@@ -8,8 +8,8 @@ export default class UpdateWatchedSeriesComponent extends Component {
     this.state = {
         id: this.props.params.id,
         name: '',
-        genre: '',
-        yearWatched: 0,
+        genre: 'Romance',
+        yearWatched: 2022,
         productionCountry: '',
         rating: 0
     }
@@ -71,47 +71,47 @@ export default class UpdateWatchedSeriesComponent extends Component {
 
   cancel() {
     this.props.navigate('/watchedseries');
-}
+  }
 
-render() {
-  const btnStyle = {
-    margin: "10px"
-  };
-  return <div>
-      <div className='container'>
-        <div className='row'>
-          <div className='card col-md-6 offset-md-3'>
-            <h3 className='text-center'>Update Watched Series</h3>
-            <div className='card-body'>
-              <form>
-                <div className='form-group'>
-                  <label>Name:</label>
-                  <input placeholder='Name' name="name" className='form-control' value={this.state.name} onChange={this.changeNameHandler} />
-                </div>
-                <div className='form-group'>
-                  <label>Genre:</label>
-                  <input placeholder='Genre' name="genre" className='form-control' value={this.state.genre} onChange={this.changeGenreHandler} />
-                </div>
-                <div className='form-group'>
-                  <label>Year Watched:</label>
-                  <input placeholder='Year Watched' name="yearWatched" className='form-control' value={this.state.yearWatched} onChange={this.changeYearWatchedHandler} />
-                </div>
-                <div className='form-group'>
-                  <label>Production Country:</label>
-                  <input placeholder='Production Country' name="productionCountry" className='form-control' value={this.state.productionCountry} onChange={this.changeProductionCountryHandler} />
-                </div>
-                <div className='form-group'>
-                  <label>Rating:</label>
-                  <input placeholder='Rating' name="rating" className='form-control' value={this.state.rating} onChange={this.changeRatingHandler} />
-                </div>
+  render() {
+    const btnStyle = {
+      margin: "10px"
+    };
+    return <div>
+        <div className='container'>
+          <div className='row'>
+            <div className='card col-md-6 offset-md-3'>
+              <h3 className='text-center'>Update Watched Series</h3>
+              <div className='card-body'>
+                <form>
+                  <div className='form-group'>
+                    <label>Name:</label>
+                    <input placeholder='Name' name="name" className='form-control' value={this.state.name} onChange={this.changeNameHandler} />
+                  </div>
+                  <div className='form-group'>
+                    <label>Genre:</label>
+                    <input placeholder='Genre' name="genre" className='form-control' value={this.state.genre} onChange={this.changeGenreHandler} />
+                  </div>
+                  <div className='form-group'>
+                    <label>Year Watched:</label>
+                    <input placeholder='Year Watched' name="yearWatched" className='form-control' value={this.state.yearWatched} onChange={this.changeYearWatchedHandler} />
+                  </div>
+                  <div className='form-group'>
+                    <label>Production Country:</label>
+                    <input placeholder='Production Country' name="productionCountry" className='form-control' value={this.state.productionCountry} onChange={this.changeProductionCountryHandler} />
+                  </div>
+                  <div className='form-group'>
+                    <label>Rating:</label>
+                    <input placeholder='Rating' name="rating" className='form-control' value={this.state.rating} onChange={this.changeRatingHandler} />
+                  </div>
 
-                <button className='btn btn-success float-end' onClick={this.updateWatchedSeries} style={btnStyle}>Save</button>
-                <button className='btn btn-danger float-end' onClick={this.cancel.bind(this)} style={btnStyle}>Cancel</button>
-              </form>
+                  <button className='btn btn-success float-end' onClick={this.updateWatchedSeries} style={btnStyle}>Save</button>
+                  <button className='btn btn-danger float-end' onClick={this.cancel.bind(this)} style={btnStyle}>Cancel</button>
+                </form>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-  </div>;
-}
+    </div>;
+  }
 }

@@ -7,8 +7,8 @@ export default class CreateWatchedSeriesComponent extends Component {
 
       this.state = {
           name: '',
-          genre: '',
-          yearWatched: 0,
+          genre: 'Romance',
+          yearWatched: 2022,
           productionCountry: '',
           rating: 0
       }
