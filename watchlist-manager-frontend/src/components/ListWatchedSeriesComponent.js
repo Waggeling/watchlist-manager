@@ -130,7 +130,7 @@ export default class ListWatchedSeriesComponent extends Component {
     return <div>
         <h2 className='text-center'>Watched Series List</h2>
         <div className='row align-items-end'>
-            <div class="col">
+            <div className="col">
                 <form style={formStyle}>
                     <div className='form-group'>
                         <select className="form-select form-select-sm" value={this.state.filterOption} onChange={this.changeFilterOptionHandler}>
@@ -147,8 +147,8 @@ export default class ListWatchedSeriesComponent extends Component {
                     <button className='btn btn-outline-success' onClick={this.resetFiltering} style={btnMargin}>Reset Filter</button>
                 </form>
             </div>
-            <div class="col"></div>
-            <div class="col-auto">
+            <div className="col"></div>
+            <div className="col-auto">
                 <button className='btn btn-warning' onClick={this.addWatchedSeries} style={btnAdd}>Add Watched Series</button>
             </div>
         </div>
