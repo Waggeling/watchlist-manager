@@ -2,7 +2,7 @@
 
 This CRUD application manages watchlists like listing and ranking already watched series. In the future it shall also be possible to list upcoming, must watch series.
 
-**Backend**: Spring Boot (Maven, Java 11)
+**Backend**: Spring Boot (Maven, Java 11)  
 **Frontend**: React
 
 ## Setup
